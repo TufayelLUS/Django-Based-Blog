@@ -1,7 +1,8 @@
 # Django-Based-Blog
 A practice project based on Python Django Web Application Framework
 # Goal
-To learn Django with hands on experience to increase the experience with the framework
+To learn Django with hands on experience to increase the experience with the framework<br>
+Using github to push the new changes as I continue to develop more
 # To-Do
 - [x] Create a landing page
 - [x] Activate user account system
