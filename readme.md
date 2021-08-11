@@ -7,7 +7,7 @@ Using github and git to track and push the new changes as I continue to develop 
 - [x] Create a landing page
 - [x] Activate user account system
 - [x] Let the logged in user submit a blog post
-- [ ] Configure the post details page
+- [x] Configure the post details page
 - [ ] Allow people to register
 - [ ] Create a clean design
 - [ ] Implement all the CRUD concepts
