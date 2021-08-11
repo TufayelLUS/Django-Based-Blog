@@ -77,7 +77,9 @@
           <a href="{{ post.blog_slug }}">
             <h2 class="post-title">{{ post.blog_title }}</h2>
             <h3 class="post-subtitle">
-              {{ post.blog_text|truncatechars:50 }}
+              {% autoescape on %}
+              {{ post.blog_text|truncatechars:50|striptags }}
+              {% endautoescape %}
             </h3>
           </a>
           <p class="post-meta">
@@ -88,6 +90,8 @@
         </div>
         <!-- Divider-->
         <hr class="my-4" />
+        {% empty %}
+        <p>No blog post is published yet. Keep checking to see posts as soon as they are published</p>
         {% endfor %}
         <!-- Pager-->
         <div class="d-flex justify-content-end mb-4">

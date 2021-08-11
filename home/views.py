@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
+from django.utils.html import strip_tags
 from .models import BlogPost
 from datetime import datetime
 import string
