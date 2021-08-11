@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from .models import BlogPost
 from datetime import datetime
+import string
+import random
 
 # Create your views here.
 
@@ -44,13 +46,37 @@ def about(request):
     return render(request, 'about.html')
 
 
+def randomString():
+    all_strings = string.ascii_lowercase + string.digits
+    gen = ''
+    for i in range(7):
+        gen += random.choice(all_strings)
+    return gen
+
+
+def showBlogPost(request, identifier, blog_slug):
+    requested_post = BlogPost.objects.get(
+        blog_slug='posts/{}/{}'.format(identifier, blog_slug))
+    context = {
+        'post': requested_post
+    }
+    return render(request, "post.html", context)
+
+
 def createBlogPost(request):
     if request.user.is_anonymous:
         return redirect('login')
     if request.method == 'POST':
         post_title = request.POST.get('title')
+        if post_title.strip() == '':
+            return redirect('createPost')
         post_body = request.POST.get('content')
         new_post = BlogPost()
+        new_post.blog_slug = "".join(
+            [x for x in post_title if x.isalnum() or x == ' '])[:15].lower()
+        new_post.blog_slug = new_post.blog_slug.replace(' ', '-')
+        new_post.blog_slug = 'posts/{}/{}'.format(
+            randomString(), new_post.blog_slug)
         new_post.blog_title = post_title
         new_post.blog_text = post_body
         new_post.blog_owner = request.user.id
