@@ -89,7 +89,7 @@ def createBlogPost(request):
 
 def showOldPosts(request, id):
     if int(id) > 0:
-        all_posts = BlogPost.objects.all()[::-1][int(id)+4:int(id)+9]
+        all_posts = BlogPost.objects.all()[::-1][(int(id))*5:(int(id)*5)+9]
         context = {
             'posts': all_posts,
             'next_archive_id': int(id)+1

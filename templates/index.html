@@ -74,7 +74,7 @@
         {% for post in posts %}
         <!-- Post preview-->
         <div class="post-preview">
-          <a href="{{ post.blog_slug }}">
+          <a href="/{{ post.blog_slug }}">
             <h2 class="post-title">{{ post.blog_title }}</h2>
             <h3 class="post-subtitle">
               {% autoescape on %}
