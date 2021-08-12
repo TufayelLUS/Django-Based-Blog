@@ -80,7 +80,7 @@ def createBlogPost(request):
             randomString(), new_post.blog_slug)
         new_post.blog_title = post_title
         new_post.blog_text = post_body
-        new_post.blog_owner = request.user.id
+        new_post.blog_owner = request.user.get_username()
         new_post.post_time = datetime.today()
         new_post.save()
         return redirect('/')

@@ -49,7 +49,8 @@
                         <a class="nav-link px-lg-3 py-3 py-lg-4" href="/createPost">Create Post</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link px-lg-3 py-3 py-lg-4" href="/logout">Logout</a>
+                        <a class="nav-link px-lg-3 py-3 py-lg-4" href="/logout">({{ request.user.get_username }})
+                            Logout</a>
                     </li>
                     {% endif %}
                 </ul>
