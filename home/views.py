@@ -10,7 +10,7 @@ import random
 
 
 def index(request):
-    all_posts = BlogPost.objects.all()[:5]
+    all_posts = BlogPost.objects.all()[::-1][:5]
     context = {
         'posts': all_posts
     }
@@ -57,7 +57,7 @@ def randomString():
 
 def showBlogPost(request, identifier, blog_slug):
     requested_post = BlogPost.objects.get(
-        blog_slug='posts/{}/{}'.format(identifier, blog_slug))[::-1]
+        blog_slug='posts/{}/{}'.format(identifier, blog_slug))
     context = {
         'post': requested_post
     }
