@@ -57,7 +57,7 @@ def randomString():
 
 def showBlogPost(request, identifier, blog_slug):
     requested_post = BlogPost.objects.get(
-        blog_slug='posts/{}/{}'.format(identifier, blog_slug))
+        blog_slug='posts/{}/{}'.format(identifier, blog_slug))[::-1]
     context = {
         'post': requested_post
     }
