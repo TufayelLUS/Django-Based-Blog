@@ -25,7 +25,7 @@ def loginUser(request):
         password = request.POST.get('password')
         user = authenticate(request, username=username, password=password)
         if user is None:
-            return redirect('login')
+            return redirect('/login')
         else:
             login(request, user)
             return redirect('/')
@@ -40,7 +40,7 @@ def signup(request):
 def logoutUser(request):
     if not request.user.is_anonymous:
         logout(request)
-        return redirect('login')
+        return redirect('/login')
 
 
 def about(request):
@@ -66,11 +66,11 @@ def showBlogPost(request, identifier, blog_slug):
 
 def createBlogPost(request):
     if request.user.is_anonymous:
-        return redirect('login')
+        return redirect('/login')
     if request.method == 'POST':
         post_title = request.POST.get('title')
         if post_title.strip() == '':
-            return redirect('createPost')
+            return redirect('/createPost')
         post_body = request.POST.get('content')
         new_post = BlogPost()
         new_post.blog_slug = "".join(
@@ -85,3 +85,15 @@ def createBlogPost(request):
         new_post.save()
         return redirect('/')
     return render(request, 'create_post.html')
+
+
+def showOldPosts(request, id):
+    if int(id) > 0:
+        all_posts = BlogPost.objects.all()[::-1][int(id)+4:int(id)+9]
+        context = {
+            'posts': all_posts,
+            'next_archive_id': int(id)+1
+        }
+        return render(request, 'index.html', context)
+    else:
+        return redirect('/archive/1')

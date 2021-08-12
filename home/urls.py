@@ -23,5 +23,7 @@ urlpatterns = [
     path('signup', views.signup, name='signup'),
     path('createPost', views.createBlogPost, name='createPost'),
     path('logout', views.logoutUser, name='logout'),
-    path('posts/<identifier>/<blog_slug>/', views.showBlogPost, name='blogpost_display')
+    path('posts/<identifier>/<blog_slug>/',
+         views.showBlogPost, name='blogpost_display'),
+    path('archive/<int:id>', views.showOldPosts, name='old_posts')
 ]
