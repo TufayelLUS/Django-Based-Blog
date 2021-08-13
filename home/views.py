@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
+from django.contrib import messages
 from django.utils.html import strip_tags
 from .models import BlogPost
 from datetime import datetime
@@ -26,6 +27,8 @@ def loginUser(request):
         password = request.POST.get('password')
         user = authenticate(request, username=username, password=password)
         if user is None:
+            messages.error(
+                request, 'Incorrect username or password. Try remembering again.')
             return redirect('/login')
         else:
             login(request, user)
@@ -38,16 +41,21 @@ def signup(request):
     if not request.user.is_anonymous:
         return redirect('/')
     if request.method == 'POST':
-        first_name = request.POST.get('first_name')
-        last_name = request.POST.get('last_name')
-        username = request.POST.get('username')
-        email = request.POST.get('email')
+        first_name = request.POST.get('first_name').strip()
+        last_name = request.POST.get('last_name').strip()
+        username = request.POST.get('username').strip()
+        email = request.POST.get('email').strip()
         password = request.POST.get('password')
         confirm_password = request.POST.get('password2')
+        if len(password) < 6:
+            messages.error(request, 'Password is less than 6 characters, please try again')
+            return redirect('/signup')
         if password != confirm_password:
+            messages.error(request, 'Password mismatch, please try again')
             return redirect('/signup')
         old_user_check = User.objects.filter(username=username)
         if len(old_user_check):
+            messages.error(request, 'Username is already taken, please pick another')
             return redirect('/signup')
         user = User.objects.create_user(username, email, password)
         user.first_name = first_name
