@@ -8,7 +8,7 @@ Using github and git to track and push the new changes as I continue to develop 
 - [x] Activate user account system
 - [x] Let the logged in user submit a blog post
 - [x] Configure the post details page
-- [ ] Allow people to register
+- [x] Allow people to register
 - [ ] Create a clean design
 - [ ] Implement all the CRUD concepts
 - [ ] Change the database to mysql
