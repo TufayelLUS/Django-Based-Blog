@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
 from django.utils.html import strip_tags
 from .models import BlogPost
 from datetime import datetime
@@ -34,6 +35,30 @@ def loginUser(request):
 
 
 def signup(request):
+    if not request.user.is_anonymous:
+        return redirect('/')
+    if request.method == 'POST':
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        confirm_password = request.POST.get('password2')
+        if password != confirm_password:
+            return redirect('/signup')
+        old_user_check = User.objects.filter(username=username)
+        if len(old_user_check):
+            return redirect('/signup')
+        user = User.objects.create_user(username, email, password)
+        user.first_name = first_name
+        user.last_name = last_name
+        user.save()
+        user = authenticate(request, username=username, password=password)
+        if user is None:
+            return redirect('/login')
+        else:
+            login(request, user)
+            return redirect('/')
     return render(request, 'signup.html')
 
 
