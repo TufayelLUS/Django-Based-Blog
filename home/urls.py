@@ -25,5 +25,6 @@ urlpatterns = [
     path('logout', views.logoutUser, name='logout'),
     path('posts/<identifier>/<blog_slug>/',
          views.showBlogPost, name='blogpost_display'),
-    path('archive/<int:id>', views.showOldPosts, name='old_posts')
+    path('archive/<int:id>', views.showOldPosts, name='old_posts'),
+    path('sitemap.xml', views.prepareSitemap, name='auto_sitemap')
 ]

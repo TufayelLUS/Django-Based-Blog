@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib import messages
@@ -48,14 +48,16 @@ def signup(request):
         password = request.POST.get('password')
         confirm_password = request.POST.get('password2')
         if len(password) < 6:
-            messages.error(request, 'Password is less than 6 characters, please try again')
+            messages.error(
+                request, 'Password is less than 6 characters, please try again')
             return redirect('/signup')
         if password != confirm_password:
             messages.error(request, 'Password mismatch, please try again')
             return redirect('/signup')
         old_user_check = User.objects.filter(username=username)
         if len(old_user_check):
-            messages.error(request, 'Username is already taken, please pick another')
+            messages.error(
+                request, 'Username is already taken, please pick another')
             return redirect('/signup')
         user = User.objects.create_user(username, email, password)
         user.first_name = first_name
@@ -130,3 +132,12 @@ def showOldPosts(request, id):
         return render(request, 'index.html', context)
     else:
         return redirect('/archive/1')
+
+
+def prepareSitemap(request):
+    all_posts = BlogPost.objects.all()
+    xml_context = {
+        'last_mod': datetime.now().strftime("%Y-%d-%m"),
+        'posts': all_posts
+    }
+    return render(request, 'sitemap.xml', xml_context)
