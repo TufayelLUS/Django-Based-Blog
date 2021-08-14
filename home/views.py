@@ -137,7 +137,7 @@ def showOldPosts(request, id):
 def prepareSitemap(request):
     all_posts = BlogPost.objects.all()
     xml_context = {
-        'last_mod': datetime.now().strftime("%Y-%d-%m"),
+        'last_mod': datetime.now().strftime("%Y-%m-%d"),
         'posts': all_posts
     }
     return render(request, 'sitemap.xml', xml_context)
