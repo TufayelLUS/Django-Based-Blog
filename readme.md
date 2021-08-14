@@ -1,5 +1,11 @@
-# Django-Based-Blog
-A practice project based on Python Django Web Application Framework
+# Django Based Blog
+A personal project based on Python Django Web Application Framework
+# Features
+* Clean and responsive design
+* Supports rich text post content using quill editor
+* Has content word counter when you type
+* Auto generated sitemap feature
+* More features coming soon ...
 # Goal
 To learn Django with hands on experience to increase the experience with the framework<br>
 Using github and git to track and push the new changes as I continue to develop more
