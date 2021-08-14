@@ -5,6 +5,7 @@ A personal project based on Python Django Web Application Framework
 * Supports rich text post content using quill editor
 * Has content word counter when you type
 * Auto generated sitemap feature
+* Dynamic meta description generator
 * More features coming soon ...
 # Goal
 To learn Django with hands on experience to increase the experience with the framework<br>
