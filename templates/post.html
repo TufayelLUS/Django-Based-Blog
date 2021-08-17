@@ -87,6 +87,46 @@
                 </div>
             </div>
         </div>
+        <div class="container px-4 px-lg-5">
+            <hr />
+            <strong>Comments</strong>
+            {% for comment in comments %}
+            <div style="border-color: lightsteelblue;border-width: 1px; border-radius: 10px; border-style: solid;"
+                class="p-3 my-3 mx-4">
+                <div>
+                    <strong><i>{{ comment.comment_owner }}</i></strong>
+                </div>
+                <div style="font-size: 15px;">
+                    {{ comment.comment_time }}
+                </div>
+                <div class="px-3">
+                    {% autoescape off %}
+                    <blockquote>{{ comment.comment_text }}</blockquote>
+                    {% endautoescape %}
+                </div>
+            </div>
+            {% empty %}
+            <p class="mx-4">Be the first person to write a comment!</p>
+            {% endfor %}
+            <div class="mx-4">
+                {% if request.user.is_anonymous %}
+                <p>Please <b><a href="/login">login</a></b> to write a comment! </p>
+                {% else %}
+                <strong>Write a comment ...</strong>
+                <form method="POST">
+                    {% csrf_token %}
+                    <div id="editor" style="min-height: 150px"></div>
+                    <input type="hidden" id="comment_data" name="comment_data" />
+                    <div style="text-align: right;">
+                        <!-- Submit Button-->
+                        <button class="btn btn-primary text-uppercase my-2" id="submitButton" type="submit">
+                            Submit Comment
+                        </button>
+                    </div>
+                </form>
+                {% endif %}
+            </div>
+        </div>
     </article>
     <!-- Footer-->
     <footer class="border-top">
@@ -137,6 +177,22 @@
             overflow: visible;
         }
     </style>
+    <!-- Initialize Quill editor -->
+    <script>
+        var quill = new Quill("#editor", {
+            modules: {
+                toolbar: [
+                    ["bold", "italic", "underline"],
+                    ["clean"],
+                ],
+            },
+            placeholder: "Write your constructive comment ...",
+            theme: "snow",
+        });
+        quill.on("text-change", function (delta, oldDelta, source) {
+            document.getElementById("comment_data").value = quill.root.innerHTML;
+        });
+    </script>
 </body>
 
 </html>

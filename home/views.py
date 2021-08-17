@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.utils.html import strip_tags
-from .models import BlogPost
+from .models import BlogPost, BlogComment
 from datetime import datetime
 import string
 import random
@@ -91,10 +91,26 @@ def randomString():
 
 
 def showBlogPost(request, identifier, blog_slug):
+    if request.method == 'POST':
+        if request.user.is_anonymous():
+            return redirect(request, '/login')
+        comment_owner = request.user.get_username()
+        comment_text = request.POST.get('comment_data')
+        tmp_blog_slug = 'posts/{}/{}'.format(identifier, blog_slug)
+        post_time = datetime.today()
+        new_comment = BlogComment()
+        new_comment.blog_slug = tmp_blog_slug
+        new_comment.comment_owner = comment_owner
+        new_comment.comment_text = comment_text
+        new_comment.post_time = post_time
+        new_comment.save()
     requested_post = BlogPost.objects.get(
         blog_slug='posts/{}/{}'.format(identifier, blog_slug))
+    requested_post_comments = BlogComment.objects.filter(
+        blog_slug='posts/{}/{}'.format(identifier, blog_slug))
     context = {
-        'post': requested_post
+        'post': requested_post,
+        'comments': requested_post_comments
     }
     return render(request, "post.html", context)
 

@@ -14,3 +14,13 @@ class BlogPost(models.Model):
 
     def __str__(self):
         return self.blog_title
+
+
+class BlogComment(models.Model):
+    blog_slug = models.CharField(max_length=100, default='')
+    comment_owner = models.CharField(max_length=100)
+    comment_text = models.TextField(max_length=1024280)
+    comment_time = models.DateField(default=django.utils.timezone.now)
+
+    def __str__(self):
+        return self.blog_slug
