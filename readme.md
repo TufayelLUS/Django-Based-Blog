@@ -18,7 +18,7 @@ Using github and git to track and push the new changes as I continue to develop 
 - [x] Allow people to register
 - [x] Update the post creation page
 - [x] Create a clean design
-- [ ] Let people comment on posts
+- [x] Let people comment on posts
 - [ ] Enable email verification
 - [ ] Implement all the CRUD concepts
 - [ ] Change the database to mysql
