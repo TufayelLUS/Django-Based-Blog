@@ -23,5 +23,3 @@ Using github and git to track and push the new changes as I continue to develop 
 - [ ] Implement all the CRUD concepts
 - [ ] Change the database to mysql
 - [ ] Add more To-Do list later
-# Project is live at
-<a href="https://devwithpython.com">devwithpython.com</a>
