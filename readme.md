@@ -39,6 +39,6 @@ run command:
 - [x] Create a clean design
 - [x] Let people comment on posts
 - [ ] Enable email verification
-- [ ] Implement all the CRUD concepts
+- [x] Implement all the CRUD concepts
 - [ ] Change the database to mysql
 - [ ] Add more To-Do list later
