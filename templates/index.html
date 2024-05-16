@@ -95,8 +95,8 @@
         {% endfor %}
         <!-- Pager-->
         <div class="d-flex justify-content-end mb-4">
-          {% if next_archive_id is None %}
-          <a class="btn btn-primary text-uppercase" href="/archive/1">Older Posts →</a>
+          {% if post_count == 0 %}
+          <a class="btn btn-primary text-uppercase disabled" href="/archive/1">Older Posts →</a>
           {% else %}
           <a class="btn btn-primary text-uppercase" href="/archive/{{ next_archive_id }}">Older Posts →</a>
           {% endif %}
