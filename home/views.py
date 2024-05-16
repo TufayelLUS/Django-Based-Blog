@@ -143,6 +143,7 @@ def showOldPosts(request, id):
         all_posts = BlogPost.objects.all()[::-1][(int(id))*5:(int(id)*5)+9]
         context = {
             'posts': all_posts,
+            'post_count': len(all_posts),
             'next_archive_id': int(id)+1
         }
         return render(request, 'index.html', context)
