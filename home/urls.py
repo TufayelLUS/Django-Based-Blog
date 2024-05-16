@@ -26,5 +26,8 @@ urlpatterns = [
     path('posts/<identifier>/<blog_slug>/',
          views.showBlogPost, name='blogpost_display'),
     path('archive/<int:id>', views.showOldPosts, name='old_posts'),
+    path('author/<str:username>/<int:id>', views.authorPosts, name='author_posts'),
+    path('delete/posts/<identifier>/<blog_slug>/', views.deletePost, name='delete_post'),
+    path('edit/posts/<identifier>/<blog_slug>/', views.updatePost, name='update_post'),
     path('sitemap.xml', views.prepareSitemap, name='auto_sitemap')
 ]
