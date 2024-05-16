@@ -84,9 +84,13 @@
           </a>
           <p class="post-meta">
             Posted by
-            <a href="#!">{{ post.blog_owner }}</a>
+            <a href="author/{{ post.blog_owner }}/1">{{ post.blog_owner }}</a>
             on {{ post.post_time }}
           </p>
+          {% if request.user.get_username == post.blog_owner %}
+          <button class="btn btn-primary p-1" onclick="location.href='/edit/{{ post.blog_slug }}';">Edit</button>
+          <button class="btn btn-danger p-1" onclick="location.href='/delete/{{ post.blog_slug }}';">Delete</button>
+          {% endif %}
         </div>
         <!-- Divider-->
         <hr class="my-4" />
