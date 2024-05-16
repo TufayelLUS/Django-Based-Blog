@@ -14,7 +14,8 @@ import random
 def index(request):
     all_posts = BlogPost.objects.all()[::-1][:5]
     context = {
-        'posts': all_posts
+        'posts': all_posts,
+        'next_archive_id': 1
     }
     return render(request, 'index.html', context)
 
