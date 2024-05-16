@@ -91,6 +91,17 @@ def randomString():
     return gen
 
 
+def authorPosts(request, username, id):
+    all_posts = BlogPost.objects.filter(blog_owner=username)[
+        ::-1][(int(id))*5:(int(id)*5)+9]
+    context = {
+        'posts': all_posts,
+        'post_count': len(all_posts),
+        'next_archive_id': int(id)+1
+    }
+    return render(request, 'index.html', context)
+
+
 def showBlogPost(request, identifier, blog_slug):
     if request.method == 'POST':
         if request.user.is_anonymous():
@@ -159,3 +170,35 @@ def prepareSitemap(request):
         'posts': all_posts
     }
     return render(request, 'sitemap.xml', xml_context)
+
+
+def deletePost(request, identifier, blog_slug):
+    slug = "posts/{}/{}".format(identifier, blog_slug)
+    selected_post = BlogPost.objects.get(blog_slug=slug)
+    # check if selected post is found
+    if selected_post is None:
+        return redirect('/')
+    if selected_post.blog_owner == request.user.get_username():
+        selected_post.delete()
+    return redirect('/')
+
+
+def updatePost(request, identifier, blog_slug):
+    slug = "posts/{}/{}".format(identifier, blog_slug)
+    selected_post = BlogPost.objects.get(blog_slug=slug)
+    # check if selected post is found
+    if selected_post is None:
+        return redirect('/')
+    if selected_post.blog_owner == request.user.get_username():
+        if request.method == 'POST':
+            post_title = request.POST.get('title')
+            post_body = request.POST.get('content')
+            selected_post.blog_title = post_title
+            selected_post.blog_text = post_body
+            selected_post.save()
+            return redirect('/{}'.format(selected_post.blog_slug))
+        else:
+            context = {
+                'post': selected_post
+            }
+            return render(request, 'update_post.html', context)
